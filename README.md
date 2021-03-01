@@ -3,6 +3,7 @@
 This pack is for Valheim modding. It includes
 
 * the unstripped Unity libraries,
+* Mono libraries for .NET 4.5,
 * Mono libraries from Unity for .NET 4.5,
 * the System.Buffers library,
 * Windows and Unix versions of BepInEx and UnityDoorstop,
@@ -20,15 +21,15 @@ It runs both on clients and servers.
     + [DLLs](#dlls)
     + [Extras](#extras)
 * [FAQ](#faq)
-    + [Are you open to pull requests?](#are-you-open-to-pull-requests-)
-    + [Will this package be maintained?](#will-this-package-be-maintained-)
-    + [Can I submit <some-random-name>.dll to the pack?](#can-i-submit--some-random-name-dll-to-the-pack-)
-    + [I'm getting a weird audio-related error when I start Valheim.](#i-m-getting-a-weird-audio-related-error-when-i-start-valheim)
-    + [How do I configure my server on Linux with the bash script?](#how-do-i-configure-my-server-on-linux-with-the-bash-script-)
-    + [What's my Linux server's password if I use the bash script?](#what-s-my-linux-server-s-password-if-i-use-the-bash-script-)
-    + [UNSAFE_ROOT_EXECUTION](#unsafe-root-execution)
-    + [There are DLLs that aren't really necessary in the pack](#there-are-dlls-that-aren-t-really-necessary-in-the-pack)
-    + [There's a .NET/mono/Unity DLL missing from the pack](#there-s-a-net-mono-unity-dll-missing-from-the-pack)
+    + [Are you open to pull requests?](#are-you-open-to-pull-requests)
+    + [Will this package be maintained?](#will-this-package-be-maintained)
+    + [Can I submit some-random-name.dll to the pack?](#can-i-submit-some-random-namedll-to-the-pack)
+    + [I'm getting a weird audio-related error when I start Valheim.](#im-getting-a-weird-audio-related-error-when-i-start-valheim)
+    + [How do I configure my server on Linux with the bash script?](#how-do-i-configure-my-server-on-linux-with-the-bash-script)
+    + [What's my Linux server's password if I use the bash script?](#whats-my-linux-servers-password-if-i-use-the-bash-script)
+    + [UNSAFE_ROOT_EXECUTION](#unsafe_root_execution)
+    + [There are DLLs that aren't really necessary in the pack](#there-are-dlls-that-arent-really-necessary-in-the-pack)
+    + [There's a .NET/mono/Unity DLL missing from the pack](#theres-a-netmonounity-dll-missing-from-the-pack)
 * [SHA-256 File Checkums](#sha-256-file-checkums)
 
 ## Links
@@ -68,7 +69,6 @@ Notes:
 6. From `C:\Program Files\Unity\Hub\Editor\2019.4.20f1\Editor\Data\PlaybackEngines\windowsstandalonesupport\Variations\mono\Managed`
 	* Copy all DLLs (overwrite when prompted)
 7. Get a copy of System.Buffers (target .NET 4.5) and add the DLL: https://www.nuget.org/packages/System.Buffers/
-8. From the DLLs you've collected, delete `UnityEngine.AudioModule.dll`
 
 ### Extras
 
@@ -87,13 +87,13 @@ Yes.
 
 Yes. Both the GitHub and the packages on the mod websites are maintained by a team. If any one person becomes unavailable, the others can continue to maintain it. Should the whole team want to stop, we're open to considering new volunteers.
 
-### Can I submit <some-random-name>.dll to the pack?
+### Can I submit some-random-name.dll to the pack?
 
 This pack is only meant for .NET/Mono/Unity DLLs. If it's part of that, sure. Make sure to include where you got it from and why you need it.
 
 ### I'm getting a weird audio-related error when I start Valheim.
 
-Did you remove `UnityEngine.AudioModule.dll` (see [Building the pack yourself](#building-the-pack-yourself)) when building the pack yourself?
+Try removing `UnityEngine.AudioModule.dll` from your DLLs.
 
 ### How do I configure my server on Linux with the bash script?
 
