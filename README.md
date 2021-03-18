@@ -16,6 +16,9 @@ It runs both on clients and servers.
 
 * [Table of Contents](#table-of-contents)
 * [Links](#links)
+* [Installation](#installation)
+    + [First time using BepInEx](#first-time-using-bepinex)
+    + [I've already got a working BepInEx setup](#ive-already-got-a-working-bepinex-setup)
 * [Building the pack yourself](#building-the-pack-yourself)
     + [Requirements](#requirements)
     + [DLLs](#dlls)
@@ -30,12 +33,70 @@ It runs both on clients and servers.
     + [UNSAFE_ROOT_EXECUTION](#unsafe_root_execution)
     + [There are DLLs that aren't really necessary in the pack](#there-are-dlls-that-arent-really-necessary-in-the-pack)
     + [There's a .NET/mono/Unity DLL missing from the pack](#theres-a-netmonounity-dll-missing-from-the-pack)
+    + [Can I run this on Linux with Proton?](#can-i-run-this-on-linux-with-proton)
 * [SHA-256 File Checkums](#sha-256-file-checkums)
 
 ## Links
 
 * [GitHub](https://github.com/U-1F31A/BepInEx_Valheim_Full)
 * [Thunderstore](https://valheim.thunderstore.io/package/1F31A/BepInEx_Valheim_Full)
+
+## Installation
+
+### First time using BepInEx
+
+The package's zip is structured as follows:
+
+```
+BepInEx_Valheim_Full/
+    BepInEx/
+        config/
+            ...
+        core/
+            ...
+        doorstop/
+            ...
+        .version
+    unstripped_corlib/
+        ...
+    doorstop_config.ini
+    start_server_bepinex.sh
+    winhttp.dll
+checksums.sha256
+icon.png
+manifest.json
+README.md
+```
+
+Extract the files manually to your Valheim installation so you get the following structure:
+
+```
+Valheim/
+    BepInEx/
+        config/
+            ...
+        core/
+            ...
+        doorstop/
+            ...
+        .version
+    unstripped_corlib/
+        ...
+    doorstop_config.ini
+    start_server_bepinex.sh
+    winhttp.dll
+```
+
+If you're on Windows, just run the game via Steam.
+
+For Linux users,
+
+* use `start_game_bepinex.sh` to start your game client
+* use `start_server_bepinex.sh` to start your game server
+
+### I've already got a working BepInEx setup
+
+Just install this plugin to your current BepInEx plugins and it'll auto-install + -update BepInEx Valheim Full for you: https://valheim.thunderstore.io/package/1F31A/BepInEx_Valheim_Full_Updater/
 
 ## Building the pack yourself
 
@@ -64,16 +125,16 @@ Notes:
 	* Copy all DLLs (overwrite when prompted)
 4. Copy the whole folder `C:\Program Files\Unity\Hub\Editor\2019.4.20f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\Facades` (not just the DLLs inside, the folder `Facades`)
 	* Keep the DLLs in that folder, overwrite when prompted
-5. From `C:\Program Files\Unity\Hub\Editor\2019.4.20f1\Editor\Data\Managed\UnityEngine`
+5. From `C:\Program Files\Unity\Hub\Editor\2019.4.20f1\Editor\Data\PlaybackEngines\windowsstandalonesupport\Variations\mono\Managed`
 	* Copy all DLLs (overwrite when prompted)
-6. From `C:\Program Files\Unity\Hub\Editor\2019.4.20f1\Editor\Data\PlaybackEngines\windowsstandalonesupport\Variations\mono\Managed`
+6. From `C:\Program Files\Unity\Hub\Editor\2019.4.20f1\Editor\Data\Managed\UnityEngine`
 	* Copy all DLLs (overwrite when prompted)
 7. Get a copy of System.Buffers (target .NET 4.5) and add the DLL: https://www.nuget.org/packages/System.Buffers/
 
 ### Extras
 
 * Copy our `doorstop_config.ini`
-* Copy our custom `valheim.sh` bash script for Linux servers
+* Copy our custom `start_server_bepinex.sh` or `start_game_bepinex.sh` bash scripts for Linux servers
 * Put the pack into your Valheim client or server, run it once to generate the `config/` directory with default `BepInEx/config/BepInEx.cfg`. Then set `Enabled = true` in the category `[Logging.Console]` of `BepInEx/config/BepInEx.cfg` to enable the console, and copy the config folder to your pack
 * Run the checksums (bash command): `find . -type f -exec sha256sum {} \;`
 
@@ -112,13 +173,13 @@ When you try to run the Linux server via the bash script, you may encounter a si
 For environments that require running the bash script as root, you can start it with:
 
 ```sh
-./valheim.sh UNSAFE_ROOT_EXECUTION
+./start_server_bepinex.sh UNSAFE_ROOT_EXECUTION
 ```
 
 or with the environment variable
 
 ```sh
-UNSAFE_ROOT_EXECUTION=true ./valheim.sh
+UNSAFE_ROOT_EXECUTION=true ./start_server_bepinex.sh
 ```
 
 ### There are DLLs that aren't really necessary in the pack
@@ -129,8 +190,21 @@ We're aware. If you've got a good reason to delete them (e.g. some are already l
 
 Submit a pull request with the details and we'll get it added.
 
+### Can I run this on Linux with Proton?
+
+Yes. Follow the guide here: https://bepinex.github.io/bepinex_docs/master/articles/advanced/steam_interop.html#protonwine
+
 ## SHA-256 File Checkums
 
 Checksums are in the file `checksums.sha256`.
 
 Checksums are sorted alphabetically so they can easily be compared even in simple text editors.
+
+## Changelog
+
+### 1.0.3
+
+* Moved `BepInEx/core_lib` to `unstripped_corlib/` to avoid a bug caused by using UnityDoorstop with r2modman
+* Added `.version` file as additional version comparison with Thunderstore API pre-checksum - this does not replace the more detailed checks
+* Updated `start_server_bepinex.sh` to support spaces in world names
+* Reordered DLL copy instructions so the Unity core DLLs are kept over the windowsstandalonesupport variation DLLs
